@@ -22,15 +22,23 @@ btnSubmit.onclick = function () {
         birthday: _birthday,
         email: _email
     };
+    // Bước này là phiên dịch sang ngôn ngữ JSON để máy chủ hiểu và làm việc tiếp
     var sendData = JSON.stringify(registerInformation);
-
+    
+    // Bước này là Gửi dữ liệu đi và lấy dữ liệu về
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
+        // Nếu trạng thái gửi đi bằng 4, nghĩa là gửi xong rồi và Status bằng 201 nghĩa là thành công rồi
         if(xhr.readyState == 4 && xhr.status == 201){
+            //Lúc này sẽ có thông báo đăng ký thành công
             alert('Register Success!');
+            // Còn nếu không thì trả về thông báo không thành công, yêu cầu làm lại!
+        }esle {
+            alert('Register fails, please try again!');
             document.forms['register-form'].reset();
         }
     }
+    // Tạo kết nối tới nơi gửi dữ liệu đến
     xhr.open('POST', 'https://2-dot-backup-server-002.appspot.com/_api/v2/members',true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(sendData);
